@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TestProject.Contracts;
 using TestProject.Controllers;
 using TestProject.Models;
@@ -13,13 +15,10 @@ namespace TestProject.UnitTests
     public class CustomerControllerTest
     {
 
-        Mock<IUnitOfWork> _mockUnitOfWork;
         Mock<ILogger<CustomerController>> _mockLogger;
-        
-        Mock<CustomerRepository> _mockCustomerRepository;
+        Mock<IRepository<Customer>> _mockCustomerRepository;
+        Mock<IUnitOfWork> _mockUnitOfWork; 
 
-        CustomerController customerController;
-        
         List<Customer> listCustomer = new List<Customer>
         {
                 new Customer { CustomerId = 1, Name = "John", AddressLine1 = "1 High St", AddressLine2 = "Burton", AddressLine3 = "UK" },
@@ -27,29 +26,29 @@ namespace TestProject.UnitTests
                 new Customer { CustomerId = 3, Name = "Steven", AddressLine1 = "3 High St", AddressLine2 = "Burton", AddressLine3 = "UK" }
         };
 
-
-
-
         [Fact]
         public void Get_WhenCalled_ReturnsCustomers()
         {
             // Arrange
+
+            _mockLogger = new Mock<ILogger<CustomerController>>(); 
+
+            _mockCustomerRepository = new Mock<IRepository<Customer>>();
+            _mockCustomerRepository.Setup(m => m.GetAll()).Returns(listCustomer); 
+
             _mockUnitOfWork = new Mock<IUnitOfWork>();
-            _mockLogger = new Mock<ILogger<CustomerController>>();
-            
-            customerController = new CustomerController(_mockUnitOfWork.Object, 
-                                                        _mockLogger.Object);
+            _mockUnitOfWork.Setup(x => x.customerRepository).Returns(_mockCustomerRepository.Object);
 
-            _mockCustomerRepository = new Mock<CustomerRepository>(); 
-
-            _mockUnitOfWork.Setup(x => x.Customer.GetAll()).Returns(listCustomer);
+            ICustomerController sut = new CustomerController(_mockUnitOfWork.Object,
+                                                             _mockLogger.Object);
 
             // Act
-            List<Customer> results = customerController.GetCustomers() as List<Customer>;
+            var result = sut.GetCustomers();
+            var okResult = result as OkObjectResult; 
 
             // Assert 
-            Assert.NotNull(results);
-
+            Assert.IsType<OkObjectResult>(okResult);
+            Assert.Equal(3, ((System.Collections.Generic.List<TestProject.Models.Customer>)okResult.Value).Count); 
         }
     }
 }

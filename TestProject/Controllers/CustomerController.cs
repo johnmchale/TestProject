@@ -12,8 +12,8 @@ namespace TestProject.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    // https://localhost:5001/customer
-    public class CustomerController : ControllerBase
+   
+    public class CustomerController : ControllerBase, ICustomerController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<CustomerController> _logger;
@@ -23,19 +23,20 @@ namespace TestProject.Controllers
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
-        
+
+        // https://localhost:5001/customer
         [HttpGet]
         public IActionResult GetCustomers()
         {
             try
             {
-                var customers = _unitOfWork.Customer.GetAll();
-                return Ok(customers); 
+                var customers = _unitOfWork.customerRepository.GetAll();
+                return Ok(customers);
             }
             catch (Exception)
             {
                 _logger.LogInformation($"Error getting Customers data");
-                return StatusCode(500, "Internal Server Error"); 
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
@@ -45,13 +46,13 @@ namespace TestProject.Controllers
         {
             try
             {
-                var customer = _unitOfWork.Customer.Get(id);
+                var customer = _unitOfWork.customerRepository.Get(id);
                 if (customer == null)
-                { 
-                    return NotFound(); 
+                {
+                    return NotFound();
                 }
 
-                return Ok(customer); 
+                return Ok(customer);
             }
             catch (Exception)
             {
@@ -81,10 +82,10 @@ namespace TestProject.Controllers
                     return BadRequest("customer object is null");
                 }
 
-                _unitOfWork.Customer.Create(customer);
-                _unitOfWork.Save(); 
+                _unitOfWork.customerRepository.Create(customer);
+                _unitOfWork.Save();
 
-                return CreatedAtRoute("CustomerById", new { id =  customer.CustomerId }, customer); 
+                return CreatedAtRoute("CustomerById", new { id = customer.CustomerId }, customer);
             }
             catch (Exception)
             {
@@ -116,11 +117,11 @@ namespace TestProject.Controllers
                 //    return BadRequest("customer does not exist");
                 //}
 
-                customer.CustomerId = id; 
-                _unitOfWork.Customer.Update(customer);
+                customer.CustomerId = id;
+                _unitOfWork.customerRepository.Update(customer);
                 _unitOfWork.Save();
 
-                return NoContent(); 
+                return NoContent();
 
             }
             catch (Exception)
@@ -139,7 +140,7 @@ namespace TestProject.Controllers
             // I decied to use it from URL 
             try
             {
-                _unitOfWork.Customer.Delete(id);
+                _unitOfWork.customerRepository.Delete(id);
                 _unitOfWork.Save();
 
                 return NoContent();

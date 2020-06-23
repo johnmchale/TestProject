@@ -24,3 +24,8 @@
 2020-06-22T19:31:00.4754974+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
 2020-06-22T19:31:00.4789376+01:00  [INF] Hosting environment: "Development" (c3307c92)
 2020-06-22T19:31:00.4823209+01:00  [INF] Content root path: "C:\Users\johnm\source\repos\TestProject\TestProject" (b5d60022)
+2020-06-22T23:27:13.7540095+01:00  [INF] Now listening on: "https://localhost:5001" (d826f4b8)
+2020-06-22T23:27:13.7653707+01:00  [INF] Now listening on: "http://localhost:5000" (d826f4b8)
+2020-06-22T23:27:13.7695705+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-06-22T23:27:13.7725584+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-06-22T23:27:13.7754391+01:00  [INF] Content root path: "C:\Users\johnm\source\repos\TestProject\TestProject" (b5d60022)

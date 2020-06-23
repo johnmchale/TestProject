@@ -29,50 +29,50 @@ namespace TestProject.Controllers
             _logger = logger;
         }
 
-        // http://localhost:5000/weatherforecast 
-        [HttpGet]
-        //public IEnumerable<WeatherForecast> Get()
-        public IActionResult GetCustomers() 
-        {
-            var rng = new Random();
+        //// http://localhost:5000/weatherforecast 
+        //[HttpGet]
+        ////public IEnumerable<WeatherForecast> Get()
+        //public IActionResult GetCustomers() 
+        //{
+        //    var rng = new Random();
 
-            _logger.LogInformation($"Hello, I'm in WeatherForecastController, Random ==> {rng}");
+        //    _logger.LogInformation($"Hello, I'm in WeatherForecastController, Random ==> {rng}");
 
-            var customers = _unitOfWork.Customer.GetAll();
+        //   // var customers = _unitOfWork.CustomerRepository.GetAll();
 
-            return Ok(customers);  
+        //    return Ok(customers);  
 
-            //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            //{
-            //    Date = DateTime.Now.AddDays(index),
-            //    TemperatureC = rng.Next(-20, 55),();
-            //    Summary = Summaries[rng.Next(Summaries.Length)]
-            //})
-            //.ToArray();
-        }
+        //    //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        //    //{
+        //    //    Date = DateTime.Now.AddDays(index),
+        //    //    TemperatureC = rng.Next(-20, 55),();
+        //    //    Summary = Summaries[rng.Next(Summaries.Length)]
+        //    //})
+        //    //.ToArray();
+        //}
 
 
-        [HttpPost]
-        //public IEnumerable<WeatherForecast> Get()
-        public IActionResult CreateCustomers([FromBody]Customer customer)
-        {
-            //var rng = new Random();
+        //[HttpPost]
+        ////public IEnumerable<WeatherForecast> Get()
+        //public IActionResult CreateCustomers([FromBody]Customer customer)
+        //{
+        //    //var rng = new Random();
 
-            //_logger.LogInformation($"Hello, I'm in WeatherForecastController, Random ==> {rng}");
+        //    //_logger.LogInformation($"Hello, I'm in WeatherForecastController, Random ==> {rng}");
 
-            //var customers = _unitOfWork.Customer.GetAll();
-            _unitOfWork.Customer.Create(customer);
-            _unitOfWork.Save();
+        //    //var customers = _unitOfWork.Customer.GetAll();
+        //    _unitOfWork.Customer.Create(customer);
+        //    _unitOfWork.Save();
 
-            return Ok(); 
+        //    return Ok(); 
 
-            //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            //{
-            //    Date = DateTime.Now.AddDays(index),
-            //    TemperatureC = rng.Next(-20, 55),();
-            //    Summary = Summaries[rng.Next(Summaries.Length)]
-            //})
-            //.ToArray();
-        }
+        //    //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        //    //{
+        //    //    Date = DateTime.Now.AddDays(index),
+        //    //    TemperatureC = rng.Next(-20, 55),();
+        //    //    Summary = Summaries[rng.Next(Summaries.Length)]
+        //    //})
+        //    //.ToArray();
+        //}
     }
 }
